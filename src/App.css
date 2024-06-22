@@ -1,3 +1,4 @@
+
 .App {
   text-align: center;
 }
@@ -35,4 +36,8 @@
   to {
     transform: rotate(360deg);
   }
+}
+.css-1qdzy9k-MuiBarElement-root {
+
+fill:#ff6877 !important
 }
