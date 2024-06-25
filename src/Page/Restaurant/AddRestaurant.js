@@ -1,6 +1,6 @@
 import React from "react";
 
-import AddRestaurantPanel from "../../UI/Restaurant/AddRestaurantPanel";
+import AddRestaurantPanel from "../../UI/Restaurant/RestaurantPanel";
 import Breadcrumb from "../../UI/Breadcrumb";
 
 const AddRestaurant = () => {
@@ -8,7 +8,7 @@ const AddRestaurant = () => {
     <div>
       <Breadcrumb title="Add Restaurant" />
 
-      <AddRestaurantPanel />
+      <AddRestaurantPanel title="Add Restaurant" />
     </div>
   );
 };

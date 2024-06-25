@@ -46,3 +46,25 @@
 .input-box:focus {
   box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .25);
 }
+.swals-show {
+  animation: swals-show .3s  ;
+}
+
+@keyframes swals-show {
+  0% {
+    transform: scale(.7);
+  }
+
+  45% {
+    transform: scale(1.05);
+  }
+
+  80% {
+    transform: scale(.95);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+

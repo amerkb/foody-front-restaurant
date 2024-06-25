@@ -14,7 +14,7 @@ const SuccessAlert = () => {
 
       return () => clearTimeout(timer);
     }
-  }, []);
+  }, [show]);
 
   return (
     <div

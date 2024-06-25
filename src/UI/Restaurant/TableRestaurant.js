@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TableRow from "../Table/TableRow";
 import TableHead from "../Table/TableHead";
 import TableData from "../Table/TableData";
@@ -6,98 +6,157 @@ import { FaPencilAlt } from "react-icons/fa";
 import { FaTrashAlt } from "react-icons/fa";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { IoMdAdd } from "react-icons/io";
+import axios from "axios";
+import Loader from "../Loader/Loader";
+import { Link } from "react-router-dom";
+import DeletePops from "../Pops/DeletePops";
+import { useDispatch } from "react-redux";
+import DeleteReducer, { setValueConfirm,setId } from "../../Redux/DeleteReducer";
 
 const TableRetaurant = () => {
-  const [open, setOpen] = useState(true);
-  function handleOpen(open) {
-    setOpen(open);
+  const [open, setOpen] = useState(0);
+  const [Restaurants, setRestaurants] = useState([]);
+  const [loading, setLoader] = useState(true);
+  const token = localStorage.getItem("token");
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    axios
+      .get(`${window.host}/superAdmin/restaurant`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log(response.data.data);
+        setRestaurants(response.data.data);
+        setLoader(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoader(false);
+      });
+  }, [Restaurants]);
+  function handleOpen(restaurant_id) {
+    let value = open === restaurant_id ? 0 : restaurant_id;
+    setOpen(value);
+  }
+  function handleOpenConfirm(restaurant_id) {
+    dispatch(setValueConfirm("restaurant"))
+    dispatch(setId(restaurant_id))
   }
   return (
-    <div className="max-lg:overflow-scroll">
-      <table className="w-full text-[15px] ">
-        <thead className="bg-secondary text-white font-sans ">
-          <tr>
-            <TableHead title="" />
-            <TableHead title="Restaurant ID" />
-            <TableHead title="Restaurant Name" />
-            <TableHead title="Restaurant Descrsption" />
-            <TableHead title="Joining Date" />
-            <TableHead title="Add Branch / Edit / Delete" />
-          </tr>
-        </thead>
-        <tbody>
-          <TableRow>
-            <TableData
-              title={
-                <MdKeyboardArrowDown
-                  onClick={() => handleOpen(!open)}
-                  className={`text-2xl  duration-300 ${
-                    open ? "rotate-0" : "-rotate-90"
+    <div
+      className={`${loading ? "py-10" : "max-lg:overflow-x-scroll py-0"}    relative`}
+    >
+      {loading ? <Loader /> : ""}
+      <DeletePops />
+      {loading ? (
+        ""
+      ) : (
+        <table className="w-full text-[15px]  ">
+          <thead className="bg-secondary text-white font-sans ">
+            <tr>
+              <TableHead title="" />
+              <TableHead title="Restaurant ID" />
+              <TableHead title="Restaurant Name" />
+              <TableHead title="Restaurant Email" />
+              <TableHead title="Restaurant Descrsption" />
+              <TableHead title="Joining Date" />
+              <TableHead title="Add Branch / Edit / Delete" />
+            </tr>
+          </thead>
+          <tbody>
+            {Restaurants.map((Restaurant) => (
+              <React.Fragment key={Restaurant.restaurant_id}>
+                <TableRow key={Restaurant.restaurant_id}>
+                  <TableData
+                    title={
+                      <MdKeyboardArrowDown
+                        onClick={() => handleOpen(Restaurant.restaurant_id)}
+                        className={`text-2xl duration-300 ${
+                          open === Restaurant.restaurant_id
+                            ? "rotate-0"
+                            : "-rotate-90"
+                        }`}
+                      />
+                    }
+                  />
+                  <TableData title={Restaurant.restaurant_id} />
+                  <TableData title={Restaurant.restaurant_name} />
+                  <TableData title={Restaurant.restaurant_email} />
+                  <TableData title={Restaurant.restaurant_description} />
+                  <TableData title={Restaurant.joining_date} />
+                  <td className="p-3 whitespace-nowrap text-center flex gap-x-10 items-center justify-center text-[18px]">
+                    <IoMdAdd />
+                    <Link
+                      to={`/UpdateRestaurant/${Restaurant.restaurant_id}`}
+                      color="inherit"
+                      underline="none"
+                    >
+                      <FaPencilAlt className="text-[#6c757d]" />
+                    </Link>
+
+                    <FaTrashAlt
+                      onClick={() =>handleOpenConfirm(Restaurant.restaurant_id) }
+                      className="text-[#d9534f]"
+                    />
+                  </td>
+                </TableRow>
+                <tr
+                  className={`${
+                    open === Restaurant.restaurant_id
+                      ? ""
+                      : "delay-300 duration-300 flex w-0"
                   }`}
-                />
-              }
-            />
-            <TableData title="John Doe" />
-            <TableData title="30" />
-            <TableData title="New York" />
-            <TableData title="New York" />
-            <td className="p-3  whitespace-nowrap text-center flex gap-x-10 items-center justify-center  text-[18px] ">
-              <IoMdAdd />
-              <FaPencilAlt className="text-[#6c757d]" />
-              <FaTrashAlt className="text-[#d9534f]" />
-            </td>
-          </TableRow>
-          <tr className={` ${open ? "" : "delay-300 duration-300 flex  w-0"}`}>
-            <td
-              colSpan="6"
-              className="w-full border-t-[1px]  text-center   text-[18px] border-[#dee2e6]"
-            >
-              <div
-                className={`  overflow-hidden duration-300  ${
-                  open ? "h-full w-full " : "  w-0 h-0"
-                }`}
-              >
-                <table className="w-full text-[13px]">
-                  <caption className="font-bold text-[1.25rem]  p-3 text-start">
-                    Branch
-                  </caption>
-                  <thead>
-                    <tr>
-                      <TableHead title="Branch ID" />
-                      <TableHead title="Branch Name" />
-                      <TableHead title="Branch Descrsption" />
-                      <TableHead title="Joining Date" />
-                      <TableHead title=" Edit / Delete" />
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <TableRow>
-                      <TableData title="John Doe" />
-                      <TableData title="30" />
-                      <TableData title="New York" />
-                      <TableData title="New York" />
-                      <td className="p-3 whitespace-nowrap text-center flex gap-x-10 items-center justify-center  text-[15px] border-[#dee2e6]">
-                        <FaPencilAlt className="text-[#6c757d]" />
-                        <FaTrashAlt className="text-[#d9534f]" />
-                      </td>
-                    </TableRow>
-                    <TableRow>
-                      <TableData title="John Doe" />
-                      <TableData title="30" />
-                      <TableData title="New York" />
-                      <TableData title="New York" />
-                      <td className="p-3 whitespace-nowrap text-center flex gap-x-10 items-center justify-center  text-[15px] border-[#dee2e6]">
-                        <FaPencilAlt className="text-[#6c757d]" />
-                        <FaTrashAlt className="text-[#d9534f]" />
-                      </td>
-                    </TableRow>
-                  </tbody>
-                </table>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+                >
+                  <td
+                    colSpan="7"
+                    className="w-full border-t-[1px] text-center text-[18px] border-[#dee2e6]"
+                  >
+                    <div
+                      className={`overflow-hidden   ${
+                        open === Restaurant.restaurant_id ? "h-full" : "h-0"
+                      }`}
+                    >
+                      <table className="w-full text-[13px]">
+                        <caption className="font-bold text-[1.25rem] p-3 text-start">
+                          Branch
+                        </caption>
+                        <thead>
+                          <tr>
+                            <TableHead title="" />
+                            <TableHead title="Branch ID" />
+                            <TableHead title="Branch Name" />
+                            <TableHead title="Branch Description" />
+                            <TableHead title="Joining Date" />
+                            <TableHead title="Edit / Delete" />
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {Restaurant.branchs.map((Branch) => (
+                            <TableRow key={Branch.branch_id}>
+                              <TableData title="" />
+                              <TableData title={Branch.branch_id} />
+                              <TableData title={Branch.branch_name} />
+                              <TableData title={Branch.branch_description} />
+                              <TableData title={Branch.joining_date} />
+                              <td className="p-3 whitespace-nowrap text-center flex gap-x-10 items-center justify-center text-[15px] border-[#dee2e6]">
+                                <FaPencilAlt className="text-[#6c757d]" />
+                                <FaTrashAlt className="text-[#d9534f]" />
+                              </td>
+                            </TableRow>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+              </React.Fragment>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 };
