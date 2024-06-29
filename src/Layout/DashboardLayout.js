@@ -5,6 +5,7 @@ import Sidebar from "./Sidebar";
 import SidebarReducer from "../Redux/SidebarReducer";
 import AlertReducer from "../Redux/AlertReducer";
 import DeleteReducer from "../Redux/DeleteReducer";
+import BranchReducer from "../Redux/BranchReducer";
 import Head from "./Head";
 import Dashboard from "../Page/Dashboard";
 import Container from "./Container";
@@ -15,6 +16,7 @@ import UpdateRestaurant from "../Page/Restaurant/UpdateRestaurant";
 const rootReducer = combineReducers({
   Sidebar: SidebarReducer,
   Alert: AlertReducer,
+  Branch: BranchReducer,
   Delete: DeleteReducer,
 });
 const store = createStore(rootReducer);

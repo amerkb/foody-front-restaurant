@@ -2,7 +2,11 @@ import React, { useState } from "react";
 
 const Field = ({ label, type = "text", placeholder, name, value }) => {
   return (
-    <div className="px-[5px] mb-5 text-[rgb(73,80,87)] text-[14px]  grid col-span-full">
+    <div
+      className={`px-[5px] mb-5 text-[rgb(73,80,87)] text-[14px] w-full  grid col-span-full ${
+        type === "hidden" ? "hidden" : "visible"
+      }`}
+    >
       <label className="mb-2 text-start">{label}</label>
       <input
         placeholder={placeholder}

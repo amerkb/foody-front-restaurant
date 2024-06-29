@@ -11,7 +11,19 @@ import Loader from "../Loader/Loader";
 import { Link } from "react-router-dom";
 import DeletePops from "../Pops/DeletePops";
 import { useDispatch } from "react-redux";
-import DeleteReducer, { setValueConfirm,setId } from "../../Redux/DeleteReducer";
+import DeleteReducer, {
+  setValueConfirm,
+  setId,
+} from "../../Redux/DeleteReducer";
+import AddBranch from "../../Page/Branch/AddBranch";
+import {
+  setBranchId,
+  setDescription,
+  setName,
+  setRestaurantId,
+  setShow,
+  setUpdate,
+} from "../../Redux/BranchReducer";
 
 const TableRetaurant = () => {
   const [open, setOpen] = useState(0);
@@ -42,15 +54,34 @@ const TableRetaurant = () => {
     setOpen(value);
   }
   function handleOpenConfirm(restaurant_id) {
-    dispatch(setValueConfirm("restaurant"))
-    dispatch(setId(restaurant_id))
+    dispatch(setValueConfirm("restaurant"));
+    dispatch(setId(restaurant_id));
+  }
+  function handleOpenAddBranch(restaurant_id) {
+    dispatch(setShow(true));
+    dispatch(setUpdate(false));
+    dispatch(setRestaurantId(restaurant_id));
+  }
+  function handleOpenUpdateBranch(Branch) {
+    dispatch(setShow(true));
+    dispatch(setUpdate(true));
+    dispatch(setBranchId(Branch.branch_id));
+    dispatch(setName(Branch.branch_name));
+    dispatch(setDescription(Branch.branch_description));
+  }
+  function handleDeleteBranch(branch_id) {
+    dispatch(setValueConfirm("branch"));
+    dispatch(setId(branch_id));
   }
   return (
     <div
-      className={`${loading ? "py-10" : "max-lg:overflow-x-scroll py-0"}    relative`}
+      className={`${
+        loading ? "py-10" : "max-lg:overflow-x-scroll py-0"
+      }    relative`}
     >
       {loading ? <Loader /> : ""}
       <DeletePops />
+      <AddBranch />
       {loading ? (
         ""
       ) : (
@@ -88,7 +119,11 @@ const TableRetaurant = () => {
                   <TableData title={Restaurant.restaurant_description} />
                   <TableData title={Restaurant.joining_date} />
                   <td className="p-3 whitespace-nowrap text-center flex gap-x-10 items-center justify-center text-[18px]">
-                    <IoMdAdd />
+                    <IoMdAdd
+                      onClick={() =>
+                        handleOpenAddBranch(Restaurant.restaurant_id)
+                      }
+                    />
                     <Link
                       to={`/UpdateRestaurant/${Restaurant.restaurant_id}`}
                       color="inherit"
@@ -98,7 +133,9 @@ const TableRetaurant = () => {
                     </Link>
 
                     <FaTrashAlt
-                      onClick={() =>handleOpenConfirm(Restaurant.restaurant_id) }
+                      onClick={() =>
+                        handleOpenConfirm(Restaurant.restaurant_id)
+                      }
                       className="text-[#d9534f]"
                     />
                   </td>
@@ -142,8 +179,14 @@ const TableRetaurant = () => {
                               <TableData title={Branch.branch_description} />
                               <TableData title={Branch.joining_date} />
                               <td className="p-3 whitespace-nowrap text-center flex gap-x-10 items-center justify-center text-[15px] border-[#dee2e6]">
-                                <FaPencilAlt className="text-[#6c757d]" />
-                                <FaTrashAlt className="text-[#d9534f]" />
+                                <FaPencilAlt
+                                  onClick={() => handleOpenUpdateBranch(Branch)}
+                                  className="text-[#6c757d]"
+                                />
+                                <FaTrashAlt
+                                  onClick={() => handleDeleteBranch(Branch.branch_id)}
+                                  className="text-[#d9534f]"
+                                />
                               </td>
                             </TableRow>
                           ))}
