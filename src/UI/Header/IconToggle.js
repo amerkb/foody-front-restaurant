@@ -21,7 +21,9 @@ const IconToggle = () => {
         className={`h-[2px] mb-[4px] bg-[#ff6877] duration-300 ${
           toggle ? "w-1/2" : "w-full"
         }`}
+      
       ></div>
+      
     </div>
   );
 };
