@@ -5,19 +5,21 @@ import Sidebar from "./Sidebar";
 import SidebarReducer from "../Redux/SidebarReducer";
 import AlertReducer from "../Redux/AlertReducer";
 import DeleteReducer from "../Redux/DeleteReducer";
-import BranchReducer from "../Redux/BranchReducer";
+import CategoryReducer from "../Redux/CategoryReducer";
+import MealReducer from "../Redux/MealReducer";
 import Head from "./Head";
 import Dashboard from "../Page/Dashboard";
 import Container from "./Container";
-import Restaurant from "../Page/Restaurant/Restaurant";
-import AddRestaurant from "../Page/Restaurant/AddRestaurant";
-import UpdateRestaurant from "../Page/Restaurant/UpdateRestaurant";
+import Categories from "../Page/Category/Category";
+import AddMeal from "../Page/Meal/AddMeal";
+import Meals from "../Page/Meal/Meals";
 
 const rootReducer = combineReducers({
   Sidebar: SidebarReducer,
   Alert: AlertReducer,
-  Branch: BranchReducer,
+  Category: CategoryReducer,
   Delete: DeleteReducer,
+  Meal: MealReducer,
 });
 const store = createStore(rootReducer);
 const DashboardLayout = (props) => {
@@ -27,15 +29,9 @@ const DashboardLayout = (props) => {
         <Head />
         <Sidebar />
         {props.content === "Dashboard" && <Container content={<Dashboard />} />}
-        {props.content === "Restaurant" && (
-          <Container content={<Restaurant />} />
-        )}
-        {props.content === "AddRestaurant" && (
-          <Container content={<AddRestaurant />} />
-        )}
-        {props.content === "UpdateRestaurant" && (
-          <Container content={<UpdateRestaurant />} />
-        )}
+        {props.content === "Category" && <Container content={<Categories />} />}
+        {props.content === "AddMeal" && <Container content={<AddMeal />} />}
+        {props.content === "Meals" && <Container content={<Meals />} />}
       </Provider>
     </div>
   );

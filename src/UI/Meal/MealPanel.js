@@ -1,16 +1,17 @@
 import React from "react";
 import PanelHead from "../Panel/PanelHead";
 import PanelBody from "../Panel/PanelBody";
-import FormRestaurant from "./FormRestaurant";
+import MealForm from "./MealForm";
 
 
-const RestaurantPanel = ({title}) => {
+const MealPanel = ({title}) => {
   return (
     <div>
       <PanelHead title={title} />
-      <PanelBody content={<FormRestaurant />} />
+      <PanelBody content={<MealForm />} />
+     
     </div>
   );
 };
 
-export default RestaurantPanel;
+export default MealPanel;

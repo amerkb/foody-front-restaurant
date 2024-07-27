@@ -21,7 +21,7 @@ function Login() {
     };
     console.log(data);
     axios
-      .post(`${window.host}/loginAdmin`, data)
+      .post(`${window.host}/loginRestaurant`, data)
       .then((response) => {
         localStorage.setItem("token", response.data.access_token);
         console.log(response.data);
@@ -47,14 +47,14 @@ function Login() {
           className="flex py-12 px-4  h-screen justify-center items-center"
         >
           <form
-            class="needs-validation"
+            class="needs-validation lg:w-1/2"
             novalidate=""
-            className="w-[40%] max-md:w-full"
+  
             onSubmit={handleSubmit}
           >
             <h3 className="text-[30px] font-semibold mb-2">Login to Account</h3>
             <p className="mb-[15px]">Please enter your email and password</p>
-            <div class="mb-3" className="mb-4 text-left">
+            <div class="mb-3" className="mb-4  text-left">
               <div class="input-group" className="w-full flex relative">
                 <Field
                   label="Email"
@@ -63,9 +63,7 @@ function Login() {
                   type="email"
                   value=""
                 />
-                {/* <div class="invalid-feedback">
-                  Please provide a valid email.
-                </div> */}
+             
               </div>
             </div>
             <div class="mb-3" className="mb-4 text-left">

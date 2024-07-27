@@ -2,12 +2,15 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DeleteReducer, { setValueConfirm } from "../../Redux/DeleteReducer";
 import axios from "axios";
-import { setSuccessRestaurant } from "../../Redux/AlertReducer";
 import ContainerPop from "./ContainerPop";
 import ButtonClose from "./ButtonClose";
+import { setSuccessCategory, setSuccessMeal } from "../../Redux/AlertReducer";
+import { SetRefetch } from "../../Redux/CategoryReducer";
+import { SetRefetchMeals } from "../../Redux/MealReducer";
 
 const DeletePops = () => {
   const value = useSelector((state) => state.Delete.ValueConfirm);
+  const Refetch = useSelector((state) => state.Category.Refetch);
   const Id = useSelector((state) => state.Delete.ID);
   const dispatch = useDispatch();
   const handleSubmit = () => {
@@ -15,7 +18,7 @@ const DeletePops = () => {
     const token = localStorage.getItem("token");
     axios
       .delete(
-        `${window.host}/superAdmin/${value}/${Id}`,
+        `${window.host}/Admin/${value}/${Id}`,
 
         {
           headers: {
@@ -25,13 +28,20 @@ const DeletePops = () => {
       )
       .then((response) => {
         console.log(response.data);
-        dispatch(setSuccessRestaurant(true));
+        if (value === "category") {
+          dispatch(setSuccessCategory(true));
+          dispatch(SetRefetch(Refetch + 1));
+        }
+        if (value === "product") {
+          dispatch(setSuccessMeal(true));
+          dispatch(SetRefetchMeals(Refetch + 1));
+        }
       })
       .catch((error) => {
         console.error(error);
       });
   };
-  const show = (value === "restaurant"|| value === "branch");
+  const show = value === "category" || value === "product";
   return (
     <div className={`${show ? "visible" : "hidden"}`}>
       <ContainerPop>

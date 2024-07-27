@@ -8,8 +8,11 @@ import AlertReducer from "./Redux/AlertReducer";
 
 const store = createStore(AlertReducer);
 function App() {
+
   // window.host = "http://192.168.1.111:8000/api";
-  window.host = "http://192.168.43.117:8000/api";
+  window.host = "http://192.168.1.102:8000/api";
+  // window.host = "http://192.168.43.117:8000/api";
+  // window.host = "https://api.dev4.gomaplus.tech/api";
 
   return (
     <div className="App">
@@ -20,17 +23,22 @@ function App() {
             element={<DashboardLayout content="Dashboard" />}
           />
           <Route
-            path="/Restaurants"
-            element={<DashboardLayout content="Restaurant" />}
+            path="/Categories"
+            element={<DashboardLayout content="Category" />}
           />
           <Route
-            path="/AddRestaurant"
-            element={<DashboardLayout content="AddRestaurant" />}
+            path="/AddMeal"
+            element={<DashboardLayout content="AddMeal" />}
           />
           <Route
-            path="/UpdateRestaurant/:id"
-            element={<DashboardLayout content="UpdateRestaurant" />}
+            path="/updateMeal/:id"
+            element={<DashboardLayout content="AddMeal" />}
           />
+          <Route
+            path="/Meals"
+            element={<DashboardLayout content="Meals" />}
+          />
+
           <Route
             path=""
             element={

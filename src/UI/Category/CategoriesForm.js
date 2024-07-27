@@ -1,46 +1,40 @@
 import React, { useEffect, useState } from "react";
 import Field from "../Form/Input/Field";
-import TextArea from "../Form/Input/TextArea";
 import Submit from "../Form/Submit/Submit";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
-import AlertReducer, { setSuccessRestaurant } from "../../Redux/AlertReducer";
 import { useDispatch, useSelector } from "react-redux";
-import { setShow } from "../../Redux/BranchReducer";
+import { SetRefetch, setShow } from "../../Redux/CategoryReducer";
+import { setSuccessCategory } from "../../Redux/AlertReducer";
 
-const FormBranch = () => {
-  const RestaurantId = useSelector((state) => state.Branch.RestaurantID);
-  const token = localStorage.getItem("token");
-  const update = useSelector((state) => state.Branch.update);
-  const BranchID = useSelector((state) => state.Branch.BranchID);
-  const BranchName = useSelector((state) => state.Branch.name);
-  const BranchDescription = useSelector((state) => state.Branch.description);
+const CategoriesForm = () => {
+  const update = useSelector((state) => state.Category.update);
+  const show = useSelector((state) => state.Category.show);
+  const category = useSelector((state) => state.Category.data);
+  const Refetch = useSelector((state) => state.Category.Refetch);
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleSubmit = (event) => {
     dispatch(setShow(false));
 
-    console.log(RestaurantId);
     if (update) {
       event.preventDefault();
       const formData = new FormData(event.target);
       const data = {
         name: formData.get("name"),
-        description: formData.get("description"),
       };
       console.log(data);
       const token = localStorage.getItem("token");
       axios
-        .put(`${window.host}/superAdmin/branch/${BranchID}`, data, {
+        .put(`${window.host}/Admin/category/${category.id}`, data, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
         .then((response) => {
+          event.target.reset();
           console.log(response.data);
-          navigate("/Restaurants");
-          dispatch(setSuccessRestaurant(true));
+          dispatch(setSuccessCategory(true));
+          dispatch(SetRefetch(Refetch + 1));
         })
         .catch((error) => {
           console.error(error);
@@ -50,13 +44,12 @@ const FormBranch = () => {
       const formData = new FormData(event.target);
       const data = {
         name: formData.get("name"),
-        restaurant_id: formData.get("restaurant_id"),
-        description: formData.get("description"),
+        branch_id: localStorage.getItem("branch_id"),
       };
       console.log(data);
       const token = localStorage.getItem("token");
       axios
-        .post(`${window.host}/superAdmin/branch`, data, {
+        .post(`${window.host}/Admin/category`, data, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -64,33 +57,37 @@ const FormBranch = () => {
         .then((response) => {
           event.target.reset();
           console.log(response.data);
-          navigate("/Restaurants");
-          dispatch(setSuccessRestaurant(true));
+          dispatch(setSuccessCategory(true));
+          dispatch(SetRefetch(Refetch + 1));
         })
         .catch((error) => {
           console.error(error);
         });
     }
   };
+  const [value, setValue] = useState("");
+
+  const handleChange = (e) => {
+    setValue(e.target.value);
+  };
+
+  useEffect(() => {
+    setValue(category.name);
+  }, [show]);
 
   return (
     <form onSubmit={handleSubmit} className="relative">
       <Field
         label="Name"
-        placeholder="Branch Name"
+        placeholder="Category Name"
         name="name"
-        value={update ? BranchName : ""}
+        value={value}
+        onChange={handleChange}
       />
-      <Field type="hidden" name="restaurant_id" value={RestaurantId} />
-      <TextArea
-        label="Description"
-        placeholder="Branch Description"
-        name="description"
-        value={update ? BranchDescription : ""}
-      />
+
       <Submit />
     </form>
   );
 };
 
-export default FormBranch;
+export default CategoriesForm;

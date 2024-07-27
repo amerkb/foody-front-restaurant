@@ -1,12 +1,12 @@
 import React from 'react'
 import PanelHead from '../Panel/PanelHead'
 import PanelBody from '../Panel/PanelBody'
-import TableRetaurant from './TableRestaurant'
+import TableRetaurant from './CategoriesTable'
 
 const RestaurantListPanel = () => {
   return (
     <div>
-      <PanelHead title='Restaurants List '/>
+      <PanelHead title='Categories List '/>
       <PanelBody content={<TableRetaurant/>} />
       </div>
   )
