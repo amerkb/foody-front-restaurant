@@ -5,50 +5,34 @@ import Submit from "../Form/Submit/Submit";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import AlertReducer, { setSuccessRestaurant } from "../../Redux/AlertReducer";
-import { useDispatch } from "react-redux";
-import Loader from "../Loader/Loader";
+import { useDispatch, useSelector } from "react-redux";
+import { setShow } from "../../Redux/BranchReducer";
 
-const FormRestaurant = () => {
-  const { id } = useParams();
-  const [Restaurant, setRestaurant] = useState({});
+const FormBranch = () => {
+  const RestaurantId = useSelector((state) => state.Branch.RestaurantID);
   const token = localStorage.getItem("token");
-  const update = id != null ? true : false;
-  const [loading, setLoader] = useState(update);
+  const update = useSelector((state) => state.Branch.update);
+  const BranchID = useSelector((state) => state.Branch.BranchID);
+  const BranchName = useSelector((state) => state.Branch.name);
+  const BranchDescription = useSelector((state) => state.Branch.description);
 
-  useEffect(() => {
-    if (update) {
-      axios
-        .get(`${window.host}/superAdmin/restaurant/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((response) => {
-          console.log(response.data.data);
-          setRestaurant(response.data.data);
-          setLoader(false);
-        })
-        .catch((error) => {
-          console.error(error);
-          setLoader(false);
-        });
-    }
-  }, []);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleSubmit = (event) => {
+    dispatch(setShow(false));
+
+    console.log(RestaurantId);
     if (update) {
       event.preventDefault();
       const formData = new FormData(event.target);
       const data = {
         name: formData.get("name"),
-        email: formData.get("email"),
         description: formData.get("description"),
       };
       console.log(data);
       const token = localStorage.getItem("token");
       axios
-        .put(`${window.host}/superAdmin/restaurant/${id}`, data, {
+        .put(`${window.host}/superAdmin/branch/${BranchID}`, data, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -66,18 +50,19 @@ const FormRestaurant = () => {
       const formData = new FormData(event.target);
       const data = {
         name: formData.get("name"),
-        email: formData.get("email"),
+        restaurant_id: formData.get("restaurant_id"),
         description: formData.get("description"),
       };
       console.log(data);
       const token = localStorage.getItem("token");
       axios
-        .post(`${window.host}/superAdmin/restaurant`, data, {
+        .post(`${window.host}/superAdmin/branch`, data, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
         .then((response) => {
+          event.target.reset();
           console.log(response.data);
           navigate("/Restaurants");
           dispatch(setSuccessRestaurant(true));
@@ -90,30 +75,22 @@ const FormRestaurant = () => {
 
   return (
     <form onSubmit={handleSubmit} className="relative">
-      {loading ? <Loader /> : ""}
-
       <Field
         label="Name"
-        placeholder="Restaurant Name"
+        placeholder="Branch Name"
         name="name"
-        value={Restaurant.name}
+        value={update ? BranchName : ""}
       />
-      <Field
-        label="Email"
-        placeholder="Restaurant Email"
-        type="email"
-        name="email"
-        value={Restaurant.email}
-      />
+      <Field type="hidden" name="restaurant_id" value={RestaurantId} />
       <TextArea
         label="Description"
-        placeholder="Restaurant Description"
+        placeholder="Branch Description"
         name="description"
-        value={Restaurant.description}
+        value={update ? BranchDescription : ""}
       />
       <Submit />
     </form>
   );
 };
 
-export default FormRestaurant;
+export default FormBranch;

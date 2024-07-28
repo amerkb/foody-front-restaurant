@@ -6,7 +6,7 @@ const Logo = () => {
       <a className="py-[17px] text-center block">
         <img
           className="max-w-[150px] m-auto"
-          src="http://localhost:3000/download.png"
+          src="http://localhost:3000/Logo.png"
         />
       </a>
     </div>

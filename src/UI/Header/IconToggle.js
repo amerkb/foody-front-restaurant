@@ -4,7 +4,7 @@ import SetElementSidebarReducer, {
   setTOGGLE,
 } from "../../Redux/SidebarReducer";
 const IconToggle = () => {
-  const toggle = useSelector((state) => state.toggle);
+  const toggle = useSelector((state) => state.Sidebar.toggle);
   const dispatch = useDispatch();
   const handleClick = () => {
     dispatch(setTOGGLE(!toggle));

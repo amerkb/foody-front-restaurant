@@ -3,13 +3,14 @@ import PanelHead from "../Panel/PanelHead";
 import PanelBody from "../Panel/PanelBody";
 import FormRestaurant from "./FormRestaurant";
 
-const AddRestaurant = () => {
+
+const RestaurantPanel = ({title}) => {
   return (
     <div>
-      <PanelHead title="Add Restaurant" />
+      <PanelHead title={title} />
       <PanelBody content={<FormRestaurant />} />
     </div>
   );
 };
 
-export default AddRestaurant;
+export default RestaurantPanel;

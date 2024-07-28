@@ -3,7 +3,7 @@ import PanelHead from '../Panel/PanelHead'
 import PanelBody from '../Panel/PanelBody'
 import TableRetaurant from './TableRestaurant'
 
-const RestaurantList = () => {
+const RestaurantListPanel = () => {
   return (
     <div>
       <PanelHead title='Restaurants List '/>
@@ -12,4 +12,5 @@ const RestaurantList = () => {
   )
 }
 
-export default RestaurantList
+export default RestaurantListPanel
+

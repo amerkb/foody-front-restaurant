@@ -1,11 +1,12 @@
-import React from 'react'
+import React from "react";
 
-const TableRow = ({ children }) => {
+const TableRow = ({ children,key }) => {
   return (
-    <tr className='border-t-[1px] border-[#dee2e6]'>
-      { children }
+    <tr key={key}
+     className="border-t-[1px]  duration-300 hover:bg-[#00000013]  border-[#dee2e6]">
+      {children}
     </tr>
-  )
-}
+  );
+};
 
-export default TableRow
+export default TableRow;

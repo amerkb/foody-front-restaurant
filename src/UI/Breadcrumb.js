@@ -6,7 +6,7 @@ const Breadcrumb = (props) => {
 
   return (
     <div>
-      <ol className="flex items-center flex-wrap gap-x-4 text-[14px]  py-5 pr-4  mb-3 ">
+      <ol className="flex items-center  gap-x-4 text-[14px]  py-5 pr-4  mb-3 ">
         <li className="flex items-center text-[#ff6877] justify-center gap-x-2">
           <FaHome /> Home
         </li>

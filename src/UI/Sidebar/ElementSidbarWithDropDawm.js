@@ -4,9 +4,10 @@ import { useSelector, useDispatch } from "react-redux";
 import SetElementSidebarReducer, {
   setElement,
 } from "../../Redux/SidebarReducer";
+import { Link } from "react-router-dom";
 const ElementSidbarDropDawn = (props) => {
   const { title, show, icon: IconComponent } = props;
-  const elementActive = useSelector((state) => state.elementActive);
+  const elementActive = useSelector((state) => state.Sidebar.elementActive);
   const dispatch = useDispatch();
   const handleClick = () => {
     const value = title === elementActive ? "" : title;
@@ -14,7 +15,7 @@ const ElementSidbarDropDawn = (props) => {
   };
 
   return (
-    <li className="  ">
+    <li className=" ">
       <span
         onClick={handleClick}
         className="pr-0 py-[15px]  pl-[25px]  flex hover:text-[#ff6877] duration-300 relative  items-center"
@@ -31,16 +32,20 @@ const ElementSidbarDropDawn = (props) => {
           elementActive === title ? "h-[6.4rem]" : "h-0"
         } `}
       >
-        <li className="pr-0 py-[15px]  pl-[25px] text-center block border-b-2 ">
-          <span className="hover:text-[#ff6877] duration-100 flex text-[14px]  items-center">
-            Add {title}
-          </span>
-        </li>
-        <li className="pr-0 py-[15px]  pl-[25px] text-center  block    ">
-          <span className="hover:text-[#ff6877] duration-100 flex text-[14px] items-center">
-            {show} List
-          </span>
-        </li>
+        <Link to={`/Add${title}`} color="inherit" underline="none">
+          <li className="pr-0 py-[15px]  pl-[25px] text-center block border-b-2 ">
+            <span className="hover:text-[#ff6877] duration-100 flex text-[14px]  items-center">
+              Add {title}
+            </span>
+          </li>
+        </Link>
+        <Link to={`/${show}`} color="inherit" underline="none">
+          <li className="pr-0 py-[15px]  pl-[25px] text-center  block    ">
+            <span className="hover:text-[#ff6877] duration-100 flex text-[14px] items-center">
+              {show} List
+            </span>
+          </li>
+        </Link>
       </ul>
     </li>
   );
