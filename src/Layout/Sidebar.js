@@ -6,6 +6,9 @@ import ElementSidbarDropDawn from "../UI/Sidebar/ElementSidbarWithDropDawm";
 import { useSelector } from "react-redux";
 import { TbCategoryPlus } from "react-icons/tb";
 import { GiHotMeal } from "react-icons/gi";
+import { MdTableBar } from "react-icons/md";
+import { IoPerson } from "react-icons/io5";
+
 
 const Sidebar = () => {
   const toggle = useSelector((state) => state.Sidebar.toggle);
@@ -21,6 +24,8 @@ h-screen overflow-auto font-sans ${toggle ? "max-md:w-[225px] w-[255px]" : "w-[0
         <ElementSidbar title="Dashboard" icon={MdDashboard} />
         <ElementSidbar title="Categories" icon={TbCategoryPlus} />
         <ElementSidbarDropDawn title="Meal"  show='Meals' icon={GiHotMeal } />
+        <ElementSidbar title="Tables" icon={MdTableBar} />
+        <ElementSidbar title="Employees" icon={IoPerson} />
 
       </ul>
     </aside>

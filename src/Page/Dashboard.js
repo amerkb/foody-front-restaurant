@@ -1,12 +1,12 @@
 import React from 'react'
 import Breadcrumb from '../UI/Breadcrumb'
-import ComparisonRestaurant from '../UI/Dashboard/ComparisonRestaurant'
+import Food from '../UI/Dashboard/Food'
 
 const Dashboard = () => {
   return (
     <div>
       <Breadcrumb title="Dashboard"/>
-      <ComparisonRestaurant />
+      < Food/>
     </div>
   )
 }

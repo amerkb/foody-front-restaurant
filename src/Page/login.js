@@ -61,7 +61,6 @@ function Login() {
                   placeholder="Email"
                   name="Email"
                   type="email"
-                  value=""
                 />
              
               </div>
@@ -73,7 +72,6 @@ function Login() {
                   type="password"
                   placeholder="Password"
                   name="Password"
-                  value=""
                 />
                 {/* <div class="invalid-feedback">
                   Please provide a valid email.

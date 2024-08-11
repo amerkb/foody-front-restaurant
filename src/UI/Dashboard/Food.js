@@ -1,15 +1,15 @@
 import React from 'react'
-import Bar from '../Charts/Bar'
+import Bar from '../Charts/FoodBar'
 import PanelBody from '../Panel/PanelBody'
 import PanelHead from '../Panel/PanelHead'
 
-const ComparisonRestaurant = () => {
+const Food = () => {
   return (
     <div className='px-[15px]   bg-white'>
-        <PanelHead title="Restaurant List"/>
+        <PanelHead title="Compare Foods By Request"/>
         <PanelBody content={<Bar />} />
     </div>
   )
 }
 
-export default ComparisonRestaurant
+export default Food

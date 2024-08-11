@@ -1,11 +1,11 @@
 import React from "react";
-import Link from "@mui/material/Link";
+import { Link } from "react-router-dom";
 
 const ElementSidbar = (props) => {
   const { title, icon: IconComponent } = props;
 
   return (
-    <Link href={`/${title}`} color="inherit" underline="none">
+    <Link to={`/${title}`} style={{ textDecoration: "none", color: "inherit" }}>
       <li className="  ">
         <span className="pr-0 py-[15px]  pl-[25px] flex hover:text-[#ff6877] duration-300  items-center">
           {IconComponent && <IconComponent className="text-[16px] mr-[20px]" />}

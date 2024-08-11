@@ -52,6 +52,7 @@ const MealForm = () => {
         name: "",
         description: "",
         price: "",
+        active:1
       });
     }
 
@@ -78,12 +79,13 @@ const MealForm = () => {
     const token = localStorage.getItem("token");
     const formData = new FormData();
     if (data.image) {
-      console.log(data.image);
+      console.log(data);
       formData.append("image", data.image);
     }
     const time = dayjs(data.estimated_time, "HH:mm:ss", true);
     const formattedTime = time.format("HH:mm:ss");
     formData.append("name", data.name);
+    formData.append("active", data.active?1:0);
     formData.append("price", data.price);
     formData.append("estimated_time", formattedTime);
     formData.append("price", data.price);
@@ -134,7 +136,7 @@ const MealForm = () => {
       className="relative flex flex-col gap-y-[10px]"
     >
       {loading ? <Loader /> : ""}
-      <div className="flex">
+      <div className="flex max-md:flex-col">
         <Field
           label="name"
           value={data.name}
@@ -151,7 +153,7 @@ const MealForm = () => {
           onChange={(event) => handleDataChange("price", event.target.value)}
         />
       </div>
-      <div className="flex gap-x-[10px]">
+      <div className="flex max-md:flex-col max-md:gap-y-10 gap-x-[10px]">
         <FormControl fullWidth style={{ height: "100%" }}>
           <InputLabel id="demo-simple-select-label">Category</InputLabel>
           <Select
@@ -185,7 +187,7 @@ const MealForm = () => {
           />
         </LocalizationProvider>
       </div>
-      <div className="flex items-center ">
+      <div className="flex  items-center ">
         <Field
           label="image"
           onChange={(event) => {
@@ -196,7 +198,7 @@ const MealForm = () => {
           required={false}
           name="image"
         />
-        <div className="w-1/4">
+        <div className=" flex-1">
           <p class="medium"> Active</p>
           <Switch
             checked={data.active}

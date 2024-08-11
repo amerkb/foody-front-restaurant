@@ -4,7 +4,7 @@ import CategoriesPanel from "../../UI/Category/CategoriesPanel";
 import SuccessAlert from "../../UI/Alert/SuccessAlert";
 import Loader from "../../UI/Loader/Loader";
 
-const Restaurant = () => {
+const category = () => {
   return (
     <div>
       <Breadcrumb title="Categories List" />
@@ -14,4 +14,4 @@ const Restaurant = () => {
   );
 };
 
-export default Restaurant;
+export default category;

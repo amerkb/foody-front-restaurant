@@ -36,7 +36,7 @@ const Meals = () => {
       <DeletePops />
       <Breadcrumb title="Meals" />
       <SuccessAlert type='product'/>
-      <div className="w-full pt-4  min-h-[calc(100vh-15.5rem)] relative h-full grid gap-8 grid-cols-[repeat(auto-fill,_minmax(300px,_1fr))]">
+      <div className="w-full  min-h-[calc(100vh-15.5rem)] relative h-full grid gap-8 grid-cols-[repeat(auto-fill,_minmax(300px,_1fr))]">
         {loading ? <Loader bg="bg-[#f0f0fa]" /> : ""}
 
         {products.map((data) => (

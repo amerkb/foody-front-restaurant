@@ -4,9 +4,16 @@ import DeleteReducer, { setValueConfirm } from "../../Redux/DeleteReducer";
 import axios from "axios";
 import ContainerPop from "./ContainerPop";
 import ButtonClose from "./ButtonClose";
-import { setSuccessCategory, setSuccessMeal } from "../../Redux/AlertReducer";
+import {
+  setSuccessCategory,
+  setSuccessEmployee,
+  setSuccessMeal,
+  setSuccessTable,
+} from "../../Redux/AlertReducer";
 import { SetRefetch } from "../../Redux/CategoryReducer";
 import { SetRefetchMeals } from "../../Redux/MealReducer";
+import { SetRefetchTable } from "../../Redux/TableReducer";
+import { SetRefetchEmployee } from "../../Redux/EmployeeReducer";
 
 const DeletePops = () => {
   const value = useSelector((state) => state.Delete.ValueConfirm);
@@ -36,12 +43,24 @@ const DeletePops = () => {
           dispatch(setSuccessMeal(true));
           dispatch(SetRefetchMeals(Refetch + 1));
         }
+        if (value === "table") {
+          dispatch(setSuccessTable(true));
+          dispatch(SetRefetchTable(Refetch + 1));
+        }
+        if (value === "Employee") {
+          dispatch(setSuccessEmployee(true));
+          dispatch(SetRefetchEmployee(Refetch + 1));
+        }
       })
       .catch((error) => {
         console.error(error);
       });
   };
-  const show = value === "category" || value === "product";
+  const show =
+    value === "category" ||
+    value === "product" ||
+    value === "Employee" ||
+    value === "table";
   return (
     <div className={`${show ? "visible" : "hidden"}`}>
       <ContainerPop>
